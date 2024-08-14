@@ -5,7 +5,7 @@ import {
   getUsers,
   updateUser,
   deleteUser,
-} from "../../lib/IDB/usesTable";
+} from "../../lib/IDB/usesStore";
 import Link from "next/link";
 
 export default function Home() {
@@ -80,7 +80,7 @@ export default function Home() {
         onClick={handleAddUser}
         className="bg-cyan-500 text-white px-5 py-2 border-t border-r border-b"
       >
-        Add Todo
+        Add User
       </button>
       <ol className="list-decimal px-10">
         {users.map((user) => (

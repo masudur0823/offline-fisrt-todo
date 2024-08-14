@@ -5,7 +5,7 @@ import {
   getTodos,
   updateTodo,
   deleteTodo,
-} from "../lib/IDB/todosTable";
+} from "../lib/IDB/todosStore";
 import Link from "next/link";
 
 export default function Home() {
