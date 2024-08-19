@@ -3,6 +3,7 @@ import { openDB } from "idb";
 const DB_NAME = "todoDB";
 export const TODO_STORE = "todos";
 export const USER_STORE = "users";
+export const TASK_STORE = "tasks";
 
 export async function initDB() {
   return openDB(DB_NAME, 1, {
@@ -15,6 +16,12 @@ export async function initDB() {
       }
       if (!db.objectStoreNames.contains(USER_STORE)) {
         db.createObjectStore(USER_STORE, {
+          keyPath: "id",
+          autoIncrement: true,
+        });
+      }
+      if (!db.objectStoreNames.contains(TASK_STORE)) {
+        db.createObjectStore(TASK_STORE, {
           keyPath: "id",
           autoIncrement: true,
         });

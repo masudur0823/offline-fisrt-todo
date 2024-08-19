@@ -2,13 +2,13 @@
 import { useState, useEffect } from "react";
 import {
   addUser,
+  addMultipleUsers,
   getUsers,
   updateUser,
   deleteUser,
 } from "../../lib/IDB/usesStore";
-import Link from "next/link";
 
-export default function Home() {
+export default function Users() {
   const [users, setUsers] = useState([]);
   const [userForm, setUserForm] = useState({
     name: "",
@@ -44,6 +44,19 @@ export default function Home() {
     });
   };
 
+  console.log("users---:", users);
+
+  const handleMultiUsers = async () => {
+    await addMultipleUsers([
+      { name: "kalam1" },
+      { name: "kalam2" },
+      { name: "kalam3" },
+    ]);
+
+    const storedItems = await getUsers();
+    setUsers(storedItems);
+  };
+
   //   const handleToggleComplete = async (todo) => {
   //     todo.completed = !todo.completed;
   //     await updateTodo(todo);
@@ -57,8 +70,12 @@ export default function Home() {
 
   return (
     <div className="p-10">
-      <Link href="/">Todos</Link>
-      <Link href="/users">Users</Link>
+      <button
+        onClick={handleMultiUsers}
+        className="bg-cyan-500 text-white px-5 py-2 border-t border-r border-b"
+      >
+        Multi User
+      </button>
       <h1 className="text-3xl text-green-600 font-bold">User List</h1>
       <input
         type="text"
@@ -82,6 +99,7 @@ export default function Home() {
       >
         Add User
       </button>
+
       <ol className="list-decimal px-10">
         {users.map((user) => (
           <li key={user.id}>

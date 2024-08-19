@@ -6,7 +6,6 @@ import {
   updateTodo,
   deleteTodo,
 } from "../lib/IDB/todosStore";
-import Link from "next/link";
 
 export default function Home() {
   const [todos, setTodos] = useState([]);
@@ -42,8 +41,6 @@ export default function Home() {
 
   return (
     <div className="p-10">
-      <Link href="/">Todos</Link>
-      <Link href="/users">Users</Link>
       <h1 className="text-3xl text-green-600 font-bold">Todo List</h1>
       <input
         type="text"
