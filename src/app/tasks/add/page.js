@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "@/api/axios";
 import { updateMultipleTasks } from "@/lib/IDB/tasksStore";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -30,25 +31,15 @@ export default function TaskAdd({ setData }) {
       body: JSON.stringify(data),
     });
 
-    console.log(add);
+    // console.log(add);
 
     if (add.ok) {
       // setData()
       console.log("added successfully");
-      fetch(`https://test-backend-node.onrender.com/task`, {
-        cache: "no-store",
-      })
-        .then((res) => res.json())
-        .then(async (data) => {
-          setForm({
-            title: "",
-            description: "",
-            status: "active",
-            date: "",
-          });
-          setData(data.result);
-          await updateMultipleTasks(data.result);
-        });
+      axios.get(`/task`).then(async (res) => {
+        setData(res?.data.result);
+        await updateMultipleTasks(res?.data.result);
+      });
     } else {
       console.log("not addedd . please check error");
     }

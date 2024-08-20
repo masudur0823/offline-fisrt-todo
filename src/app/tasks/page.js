@@ -10,23 +10,45 @@ import axios from "@/api/axios";
 export default function Tasks() {
   // const data = getOnlineTasks();
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState("online");
+  const [loading, setLoading] = useState(false);
+
+  // useEffect(() => {
+  //   fetch(`https://test-backend-node.onrender.com/task`, {
+  //     cache: "no-store",
+  //   })
+  //     .then((res) => res.json())
+  //     .then(async (data) => {
+  //       setMode("online");
+  //       setData(data.result);
+  //       await updateMultipleTasks(data.result);
+  //     })
+  //     .catch(async (err) => {
+  //       console.log(err);
+  //       setMode("offline");
+  //       const offlineData = await getOfflineTasks();
+  //       setData(offlineData);
+  //     });
+  // }, []);
 
   useEffect(() => {
-    setIsLoading(true);
+    setLoading(true);
     axios
       .get(`/task`)
-      .then(async (data) => {
+      .then(async (res) => {
         setMode("online");
-        setIsLoading(false);
-        setData(data.result);
-        await updateMultipleTasks(data.result);
+        setLoading(false);
+        setData(res?.data?.result);
+        await updateMultipleTasks(res?.data?.result);
       })
       .catch(async (err) => {
-        setMode("offline");
-        const offlineData = await getOfflineTasks();
-        setData(offlineData);
+        console.log(err);
+        if (err.message === "Network Error") {
+          setMode("offline");
+          setLoading(false);
+          const offlineData = await getOfflineTasks();
+          setData(offlineData);
+        }
       });
   }, []);
 
@@ -47,6 +69,7 @@ export default function Tasks() {
           </tr>
         </thead>
         <tbody>
+          {loading ? "loading.." : null}
           {data?.map((item, index) => (
             <tr key={index} className="[&>td]:p-2 [&>td]:border">
               <td>{item?.title}</td>

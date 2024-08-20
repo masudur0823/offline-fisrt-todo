@@ -26,11 +26,10 @@ export async function getOnlineTasks() {
       cache: "no-store",
     });
     const data = res.json();
-    console.log(data);
-    // await addMultipleTasks(data?.result);
     return data;
   } catch (error) {
     console.log("not ok-------");
+    return error;
   }
 }
 
