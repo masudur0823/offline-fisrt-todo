@@ -1,13 +1,38 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import TaskAdd from "./add/page";
 import EditButton from "./EditButton";
 import DeleteButton from "./DeleteButton";
+import { getOfflineTasks, updateMultipleTasks } from "@/lib/IDB/tasksStore";
 
-export default async function Tasks() {
-  const data = await getTasks();
+export default function Tasks() {
+  // const data = getOnlineTasks();
+  const [data, setData] = useState([]);
+  const [mode, setMode] = useState("online");
+
+  useEffect(() => {
+    fetch(`https://test-backend-node.onrender.com/task`, {
+      cache: "no-store",
+    })
+      .then((res) => res.json())
+      .then(async (data) => {
+        setData(data.result);
+        await updateMultipleTasks(data.result);
+      })
+      .catch(async (err) => {
+        setMode("offline");
+        const offlineData = await getOfflineTasks();
+        setData(offlineData);
+      });
+  }, []);
+
+  // console.log(data);
+
   return (
     <>
-      <TaskAdd />
+      {mode === "offline" ? "You are offline. No net connection needed" : null}
+      <TaskAdd setData={setData} />
       <table className="w-full md:w-auto">
         <thead>
           <tr className="[&>th]:p-2 [&>th]:border">
@@ -19,7 +44,7 @@ export default async function Tasks() {
           </tr>
         </thead>
         <tbody>
-          {data?.result?.map((item, index) => (
+          {data?.map((item, index) => (
             <tr key={index} className="[&>td]:p-2 [&>td]:border">
               <td>{item?.title}</td>
               {/* <td>{item?.description}</td>
@@ -28,7 +53,7 @@ export default async function Tasks() {
               <td>
                 <div className="flex gap-2">
                   <EditButton />
-                  <DeleteButton id={item?._id} />
+                  <DeleteButton setData={setData} id={item?._id} />
                 </div>
               </td>
             </tr>
@@ -39,10 +64,10 @@ export default async function Tasks() {
   );
 }
 
-const getTasks = async () => {
-  const dynamicData = await fetch(
-    `https://test-backend-node.onrender.com/task`,
-    { cache: "no-store" }
-  );
-  return dynamicData.json();
-};
+// const getTasks = async () => {
+//   const dynamicData = await fetch(
+//     `https://test-backend-node.onrender.com/task`,
+//     { cache: "no-store" }
+//   );
+//   return dynamicData.json();
+// };

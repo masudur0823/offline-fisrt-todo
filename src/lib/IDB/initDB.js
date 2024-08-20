@@ -22,8 +22,7 @@ export async function initDB() {
       }
       if (!db.objectStoreNames.contains(TASK_STORE)) {
         db.createObjectStore(TASK_STORE, {
-          keyPath: "id",
-          autoIncrement: true,
+          keyPath: "_id",
         });
       }
     },

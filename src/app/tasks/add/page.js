@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
-export default function TaskAdd() {
+export default function TaskAdd({ setData }) {
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -29,15 +29,25 @@ export default function TaskAdd() {
       body: JSON.stringify(data),
     });
 
+    console.log(add);
+
     if (add.ok) {
+      // setData()
       console.log("added successfully");
-      router.refresh();
-      setForm({
-        title: "",
-        description: "",
-        status: "active",
-        date: "",
-      });
+      fetch(`https://test-backend-node.onrender.com/task`, {
+        cache: "no-store",
+      })
+        .then((res) => res.json())
+        .then(async (data) => {
+          setForm({
+            title: "",
+            description: "",
+            status: "active",
+            date: "",
+          });
+          setData(data.result);
+          await updateMultipleTasks(data.result);
+        });
     } else {
       console.log("not addedd . please check error");
     }

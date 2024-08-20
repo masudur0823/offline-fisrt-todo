@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 
-export default function DeleteButton({ id }) {
+export default function DeleteButton({ id, setData }) {
   const router = useRouter();
   const handleDelete = async () => {
     console.log(id);
