@@ -5,18 +5,21 @@ import TaskAdd from "./add/page";
 import EditButton from "./EditButton";
 import DeleteButton from "./DeleteButton";
 import { getOfflineTasks, updateMultipleTasks } from "@/lib/IDB/tasksStore";
+import axios from "@/api/axios";
 
 export default function Tasks() {
   // const data = getOnlineTasks();
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState("online");
 
   useEffect(() => {
-    fetch(`https://test-backend-node.onrender.com/task`, {
-      cache: "no-store",
-    })
-      .then((res) => res.json())
+    setIsLoading(true);
+    axios
+      .get(`/task`)
       .then(async (data) => {
+        setMode("online");
+        setIsLoading(false);
         setData(data.result);
         await updateMultipleTasks(data.result);
       })
@@ -31,7 +34,7 @@ export default function Tasks() {
 
   return (
     <>
-      {mode === "offline" ? "You are offline. No net connection needed" : null}
+      {mode === "offline" ? "You are offline. No net connection" : null}
       <TaskAdd setData={setData} />
       <table className="w-full md:w-auto">
         <thead>
