@@ -6,11 +6,12 @@ import EditButton from "./EditButton";
 import DeleteButton from "./DeleteButton";
 import { getOfflineTasks, updateMultipleTasks } from "@/lib/IDB/tasksStore";
 import axios from "@/api/axios";
+import useMode from "@/hooks/useMode";
 
 export default function Tasks() {
   // const data = getOnlineTasks();
+  const { isConnected, setIsConnected } = useMode();
   const [data, setData] = useState([]);
-  const [mode, setMode] = useState("online");
   const [loading, setLoading] = useState(false);
 
   // useEffect(() => {
@@ -36,7 +37,7 @@ export default function Tasks() {
     axios
       .get(`/task`)
       .then(async (res) => {
-        setMode("online");
+        setIsConnected(true);
         setLoading(false);
         setData(res?.data?.result);
         await updateMultipleTasks(res?.data?.result);
@@ -44,7 +45,7 @@ export default function Tasks() {
       .catch(async (err) => {
         console.log(err);
         if (err.message === "Network Error") {
-          setMode("offline");
+          setIsConnected(false);
           setLoading(false);
           const offlineData = await getOfflineTasks();
           setData(offlineData);
@@ -56,7 +57,9 @@ export default function Tasks() {
 
   return (
     <>
-      {mode === "offline" ? "You are offline. No net connection" : null}
+      {navigator.onLine ? "test - online" : "test -offline"}
+      <br />
+      {!isConnected ? "You are on offline Mode" : null}
       <TaskAdd setData={setData} />
       <table className="w-full md:w-auto">
         <thead>

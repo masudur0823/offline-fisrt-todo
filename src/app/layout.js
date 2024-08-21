@@ -1,7 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navigation from "./components/Navigation";
-import ReactQueryProvider from "@/context/ReactQueryProvider";
+import { ModeProvider } from "@/context/ModeProvider";
+// import ReactQueryProvider from "@/context/ReactQueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,10 +21,12 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         {/*  */}
-        <ReactQueryProvider>
+        {/* <ReactQueryProvider> */}
+        <ModeProvider>
           <Navigation />
           <div className="container mx-auto px-2">{children}</div>
-        </ReactQueryProvider>
+        </ModeProvider>
+        {/* </ReactQueryProvider> */}
       </body>
     </html>
   );
