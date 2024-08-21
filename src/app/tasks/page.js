@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import TaskAdd from "./add/page";
 import EditButton from "./EditButton";
 import DeleteButton from "./DeleteButton";
-import { getOfflineTasks, updateMultipleTasks } from "@/lib/IDB/tasksStore";
+import { updateMultipleTasks } from "@/lib/IDB/tasksStore";
 import axios from "@/api/axios";
 import useMode from "@/hooks/useMode";
 
@@ -45,22 +45,25 @@ export default function Tasks() {
       })
       .catch(async (err) => {
         console.log(err);
-        if (err.message === "Network Error") {
-          setIsConnected(false);
-          setLoading(false);
-          const offlineData = await getOfflineTasks();
-          setData(offlineData);
-        }
+        // if (err.message === "Network Error") {
+        //   setIsConnected(false);
+        //   setLoading(false);
+        //   const offlineData = await getOfflineTasks();
+        //   setData(offlineData);
+        // }
       });
+  }, [setIsConnected]);
+
+  useEffect(() => {
     const checkOnline = window.navigator.onLine;
     setChekOnline(checkOnline);
-  }, [setIsConnected]);
+  }, []);
 
   // console.log(data);
 
   return (
     <>
-      {checkOnline ? "test - online" : "test -offline"}
+      {checkOnline ? "test - online1" : "test -offline1"}
       <br />
       {!isConnected ? "You are on offline Mode" : null}
       <TaskAdd setData={setData} />

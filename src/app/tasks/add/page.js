@@ -7,7 +7,7 @@ import { updateMultipleTasks } from "@/lib/IDB/tasksStore";
 import React, { useState } from "react";
 
 export default function TaskAdd({ setData }) {
-  const { isConnected, setIsConnected } = useMode();
+  const { setIsConnected } = useMode();
   const [form, setForm] = useState({
     title: "",
     description: "",
