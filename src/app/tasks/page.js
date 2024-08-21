@@ -11,6 +11,7 @@ import useMode from "@/hooks/useMode";
 export default function Tasks() {
   // const data = getOnlineTasks();
   const { isConnected, setIsConnected } = useMode();
+  const [checkOnline, setChekOnline] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -51,13 +52,15 @@ export default function Tasks() {
           setData(offlineData);
         }
       });
-  }, []);
+    const checkOnline = window.navigator.onLine;
+    setChekOnline(checkOnline);
+  }, [setIsConnected]);
 
   // console.log(data);
 
   return (
     <>
-      {navigator.onLine ? "test - online" : "test -offline"}
+      {checkOnline ? "test - online" : "test -offline"}
       <br />
       {!isConnected ? "You are on offline Mode" : null}
       <TaskAdd setData={setData} />
