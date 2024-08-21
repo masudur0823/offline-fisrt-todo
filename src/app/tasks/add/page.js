@@ -2,7 +2,7 @@
 
 import axios from "@/api/axios";
 import { updateMultipleTasks } from "@/lib/IDB/tasksStore";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function TaskAdd({ setData }) {
@@ -12,7 +12,7 @@ export default function TaskAdd({ setData }) {
     status: "active",
     date: "",
   });
-  const router = useRouter();
+  // const router = useRouter();
   const handleSubmit = async () => {
     const data = {
       title: form.title,
@@ -36,6 +36,12 @@ export default function TaskAdd({ setData }) {
     if (add.ok) {
       // setData()
       console.log("added successfully");
+      setForm({
+        title: "",
+        description: "",
+        status: "active",
+        date: "",
+      });
       axios.get(`/task`).then(async (res) => {
         setData(res?.data.result);
         await updateMultipleTasks(res?.data.result);

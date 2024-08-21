@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "@/api/axios";
-import { deleteTask, updateMultipleTasks } from "@/lib/IDB/tasksStore";
+import { deleteTask } from "@/lib/IDB/tasksStore";
 // import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -14,8 +14,14 @@ export default function DeleteButton({ id, setData }) {
       axios
         .delete(`/task/${id}`)
         .then(async (res) => {
-          setData(res?.data.result);
-          await deleteTask(id);
+          console.log(res);
+          if (res.status === 200) {
+            axios.get(`/task`).then(async (res) => {
+              setData(res?.data.result);
+              // await updateMultipleTasks(res?.data.result);
+            });
+            await deleteTask(id);
+          }
         })
         .catch(async (err) => {
           if (err.message === "Network Error") {
