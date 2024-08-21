@@ -7,6 +7,8 @@ const withPWA = withPWAInit({
   // aggressiveFrontEndNavCaching: true,
   // cacheStartUrl: true,
   // disable: false,
+  reloadOnOnline: true,
+  register: false,
 });
 
 const nextConfig = {};

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import TaskAdd from "./add/page";
 import EditButton from "./EditButton";
 import DeleteButton from "./DeleteButton";
-import { updateMultipleTasks } from "@/lib/IDB/tasksStore";
+import { getOfflineTasks, updateMultipleTasks } from "@/lib/IDB/tasksStore";
 import axios from "@/api/axios";
 import useMode from "@/hooks/useMode";
 
@@ -48,8 +48,8 @@ export default function Tasks() {
         if (err.message === "Network Error") {
           setIsConnected(false);
           setLoading(false);
-          // const offlineData = await getOfflineTasks();
-          // setData(offlineData);
+          const offlineData = await getOfflineTasks();
+          setData(offlineData);
         }
       });
   }, [setIsConnected]);
