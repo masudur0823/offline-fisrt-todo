@@ -45,12 +45,12 @@ export default function Tasks() {
       })
       .catch(async (err) => {
         console.log(err);
-        // if (err.message === "Network Error") {
-        //   setIsConnected(false);
-        //   setLoading(false);
-        //   const offlineData = await getOfflineTasks();
-        //   setData(offlineData);
-        // }
+        if (err.message === "Network Error") {
+          setIsConnected(false);
+          setLoading(false);
+          // const offlineData = await getOfflineTasks();
+          // setData(offlineData);
+        }
       });
   }, [setIsConnected]);
 
