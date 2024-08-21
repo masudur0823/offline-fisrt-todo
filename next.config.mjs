@@ -3,10 +3,10 @@ import withPWAInit from "@ducanh2912/next-pwa";
 
 const withPWA = withPWAInit({
   dest: "public",
-  cacheOnFrontendNav: true,
-  aggressiveFrontEndNavCaching: true,
-  cacheStartUrl: true,
-  disable: false,
+  // cacheOnFrontendNav: true,
+  // aggressiveFrontEndNavCaching: true,
+  // cacheStartUrl: true,
+  // disable: false,
 });
 
 const nextConfig = {};
