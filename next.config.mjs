@@ -2,15 +2,15 @@
 import withPWAInit from "@ducanh2912/next-pwa";
 
 const withPWA = withPWAInit({
-  //   dest: "public",
-  customWorkerSrc: "service-worker",
-  customWorkerDest: "public",
+  dest: "public",
   cacheOnFrontendNav: true,
   aggressiveFrontEndNavCaching: true,
   cacheStartUrl: true,
-  // disable: false,
+  disable: false,
   reloadOnOnline: true,
   register: true,
+  //   runtimeCaching: [],
+
   //   sw: "service-worker.js",
 });
 
