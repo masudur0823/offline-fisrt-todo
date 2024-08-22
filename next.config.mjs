@@ -6,11 +6,8 @@ const withPWA = withPWAInit({
   cacheOnFrontendNav: true,
   aggressiveFrontEndNavCaching: true,
   cacheStartUrl: true,
-  disable: false,
   reloadOnOnline: true,
-  register: true,
   //   runtimeCaching: [],
-
   //   sw: "service-worker.js",
 });
 
