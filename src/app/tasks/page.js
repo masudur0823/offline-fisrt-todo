@@ -48,8 +48,8 @@ export default function Tasks() {
         if (err.message === "Network Error") {
           setIsConnected(false);
           setLoading(false);
-          // const offlineData = await getOfflineTasks();
-          // setData(offlineData);
+          const offlineData = await getOfflineTasks();
+          setData(offlineData);
         }
       });
   }, [setIsConnected]);
