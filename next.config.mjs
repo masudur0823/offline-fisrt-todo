@@ -9,6 +9,15 @@ const withPWA = withPWAInit({
   //   reloadOnOnline: true,
   //   runtimeCaching: [],
   //   sw: "service-worker.js",
+  runtimeCaching: [
+    {
+      urlPattern: "https://test-backend-node.onrender.com/task",
+      handler: "NetworkOnly", // Change this to 'NetworkOnly' to disable cache check for fetch API calls
+      options: {
+        cacheName: "no-cache",
+      },
+    },
+  ],
 });
 
 const nextConfig = {};
