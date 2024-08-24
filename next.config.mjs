@@ -9,6 +9,7 @@ const withPWA = withPWAInit({
   //   reloadOnOnline: true,
   //   runtimeCaching: [],
   //   sw: "service-worker.js",
+  extendDefaultRuntimeCaching: true,
   runtimeCaching: [
     {
       urlPattern: "https://test-backend-node.onrender.com/task",
